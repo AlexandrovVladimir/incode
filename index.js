@@ -2,7 +2,6 @@ const list = document.querySelector('.content-list');
 let blockInfo = document.querySelector('.information');
 let dataArray = [];
 const xhr = new XMLHttpRequest();
-const inputSearch = document.querySelector('.content__input');
 
 xhr.open('GET', 'clients.json');
 
@@ -15,16 +14,17 @@ xhr.addEventListener('readystatechange', () => {
 
             dataArray = JSON.parse(xhr.response);
             const inputSearch = document.querySelector('.content__input');
+
+            //search
             inputSearch.addEventListener('keypress', (event) => {
                 if (event.keyCode === 13) {
                     list.innerHTML = '';
                     let inputCount = inputSearch.value.length;
                     dataArray = JSON.parse(xhr.response);
-                    for (let i = 0; i < dataArray.length-1; i++) {
+                    for (let i = 0; i < dataArray.length; i++) {
                         let item = dataArray[i];
-                        console.log(item.general.lastName);
-                        if ((inputSearch.value === item.general.lastName.substring(0, inputCount)) || (inputSearch.value === item.general.firstName.substring(0, inputCount)) || (inputSearch.value === '')) {
 
+                        if ((inputSearch.value === item.general.lastName.substring(0, inputCount)) || (inputSearch.value === item.general.firstName.substring(0, inputCount)) || (inputSearch.value === '')) {
                             let li = list.appendChild(document.createElement('li'));
                             li.classList.add('content-list__item');
 
@@ -51,11 +51,16 @@ xhr.addEventListener('readystatechange', () => {
                             li.appendChild(divName);
                             li.appendChild(divTitle);
                             li.appendChild(divCompany);
+
+                            clientInfo();
                         }
                     }
                 }
-
             });
+            //search
+
+            //json
+
             dataArray.forEach(function(item) {
                 let li = list.appendChild(document.createElement('li'));
                 li.classList.add('content-list__item');
@@ -79,14 +84,29 @@ xhr.addEventListener('readystatechange', () => {
                 divCompany.classList.add('company');
                 divCompany.innerHTML = item.job.company;
 
+                const divEtcInfo = document.createElement('div');
+                divEtcInfo.classList.add('content-list__information');
+
+                const divContact = document.createElement('div');
+                divContact.classList.add('contact');
+                divContact.innerHTML = item.contact.email + '<br/>' + item.contact.phone;
+                divEtcInfo.append(divContact);
+
+                const divAddress = document.createElement('div');
+                divAddress.classList.add('address');
+                divAddress.innerHTML = item.address.street + '<br/>' + item.address.city + '<br/>' + item.address.zipCode + '<br/>' + item.address.country;
+                divEtcInfo.append(divAddress);
 
                 li.appendChild(divAvatar);
                 li.appendChild(divName);
                 li.appendChild(divTitle);
                 li.appendChild(divCompany);
+                li.appendChild(divEtcInfo);
+
             });
-            blockInfo.innerHTML = '';
-            handleEvents();
+            clientInfo();
+
+            //json
 
         } else {
             throw Error (xhr.status + ' ' + xhr.responseText);
@@ -94,19 +114,22 @@ xhr.addEventListener('readystatechange', () => {
     }
 });
 
-function handleEvents() {
+function clientInfo() {
+    // dataArray = JSON.parse(xhr.response, (key, value) => {
+    //     if (key === 'firstName') {
+    //         return value;
+    //     }
+    // });
+
     const listItems = document.querySelectorAll('.content-list__item');
-
-    dataArray = JSON.parse(xhr.response, (key, value) => {
-        if (key === 'firstName') {
-            return value;
-        }
-    });
-
     for (let i = 0; i < listItems.length; i++) {
         let listItem = listItems[i];
-        listItem.querySelector('.name').addEventListener('click', function() {
-            let copyInfo = listItem.cloneNode(this);
+
+
+        listItem.querySelector('.name').addEventListener('click', () => {
+            let copyInfo = listItem.cloneNode(listItem);
+
+            blockInfo.innerHTML = '';
             blockInfo.append(copyInfo);
         });
     }

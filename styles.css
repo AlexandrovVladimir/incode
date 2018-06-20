@@ -26,6 +26,9 @@ ul {
 .content__right {
   flex-grow: 1;
 }
+.content-list__information {
+  display: none;
+}
 .content-list__item {
   border-bottom: 1px solid #fff;
   border-right: 1px solid #fff;
@@ -34,11 +37,10 @@ ul {
 }
 .content-list__item:first-child {
   border-top: 1px solid #fff;
-  margin-top: 25px;
 }
 .content__input {
   background: #fff url("img/search-icon.svg") no-repeat 95% center;
-  border: 1px solid #fff;
+  border: none;
   border-radius: 2px;
   color: orangered;
   width: 100%;
@@ -52,7 +54,9 @@ ul {
 .avatar,
 .name,
 .title,
-.company {
+.company,
+.contact,
+.address {
   text-align: center;
 }
 .avatar img {

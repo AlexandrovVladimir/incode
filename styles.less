@@ -28,8 +28,15 @@ ul {
   }
   &__right {
     flex-grow: 1;
+    .content-list__information {
+      display: block;
+    }
   }
   &-list {
+    margin-top: 1rem;
+    &__information {
+      display: none;
+    }
     &__item {
       border-bottom: 1px solid #fff;
       border-right: 1px solid #fff;
@@ -37,13 +44,12 @@ ul {
       padding: 1rem;
       &:first-child {
         border-top: 1px solid #fff;
-        margin-top: 25px;
       }
     }
   }
   &__input {
     background: #fff url("img/search-icon.svg") no-repeat 95% center;
-    border: 1px solid #fff;
+    border: none;
     border-radius: 2px;
     color: orangered;
     width: 100%;
@@ -55,8 +61,11 @@ ul {
   }
 }
 
-.avatar, .name, .title, .company {
+.avatar, .name, .title, .company, .contact, .address {
   text-align: center;
+}
+.information {
+  margin-left: 1rem;
 }
 .avatar {
   img {
